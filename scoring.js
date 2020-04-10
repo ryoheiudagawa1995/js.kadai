@@ -47,8 +47,14 @@ $(function(){
     }
   };
   // 平均値を取得し、取得した平均点からランク分け("A", "B", "C", "D")をするロジックを作ります。
-  function get_pass_or_failure(subject_points){
+  function get_pass_or_failure(){
     // 変数「number」に入力した教科の数を代入します。
+    let subject_points = [Number($('#national_language').val()),
+                          Number($('#english').val()),
+                          Number($('#mathematics').val()),
+                          Number($('#science').val()),
+                          Number($('#society').val())
+                          ];
     let number = subject_points.length;
     // 変数「judge」に"合格"を代入しておきます。
     let judge = "合格";
@@ -63,14 +69,7 @@ $(function(){
     return judge;
   };
   // 最終的なジャッジのロジックを作ります。
-  function judgement(){
-    // 変数「achievement」に「get_achievement()の戻り値」を代入します。
-    let achievement = get_achievement();
-    // 変数「pass_or_failure」に「get_pass_or_failure()の戻り値」を代入します。
-    let pass_or_failure = get_pass_or_failure();
-    // 「最終ジャッジ」(id="alert-indicate)ボタンを押したら「あなたの成績は${achievement}で${pass_or_failure}です」が出力される処理です。
-    $('#declaration').append(`<label id="alert-indicate" class="alert alert-info">あなたの成績は${achievement}で${pass_or_failure}です</label>`);
-  };
+
   // [国語の点数,英語の点数,数学の点数,理科の点数,社会の点数]のいずれかの点数が変更された際に「function score_indicate()」を発火させる処理です。
   $('#national_language, #english, #mathematics, #science, #society').change(function() {
     score_indicate();
@@ -81,9 +80,17 @@ $(function(){
   });
   // 「判定」(class="btn-judge")ボタンを押したら「function get_pass_or_failure()」が出力される処理です。
   $('#btn-judge').click(function(){
-    $("#judge").text(get_pass_or_failure(subjevt_points));
+    $("#judge").text(get_pass_or_failure());
   });
   // 「最終ジャッジ」(class="btn-declaration")ボタンを押したら「function judgement()」が出力される処理です。
-  $('#btn-declaration').click(function() {
+  $('#btn-declaration').click(function(){
+    function judgement(){
+      // 変数「achievement」に「get_achievement()の戻り値」を代入します。
+      let achievement = get_achievement();
+      // 変数「pass_or_failure」に「get_pass_or_failure()の戻り値」を代入します。
+      let pass_or_failure = get_pass_or_failure();
+      // 「最終ジャッジ」(id="alert-indicate)ボタンを押したら「あなたの成績は${achievement}で${pass_or_failure}です」が出力される処理です。
+      $('#declaration').append(`<label id="alert-indicate" class="alert alert-info">あなたの成績は${achievement}で${pass_or_failure}です</label>`);
+    };
   });
 });
