@@ -13,11 +13,10 @@ $(function(){
     // 変数「sum」に
     // [国語の点数,英語の点数,数学の点数,理科の点数,社会の点数]をそれぞれ足します。
     // ヒント! 配列を一つづつ取り出して足していきます。
-    let sum = subject_points[0];
-    sum = sum + subject_points[1];
-    sum = sum + subject_points[2];
-    sum = sum + subject_points[3];
-    sum = sum + subject_points[4];
+    let sum = subject_points.reduce(function(a,b){
+      return a+b;
+    })
+
     // 「合計点：」(class="sum_indicate")に変数「sum」(合計点)を出力させます。
     $("#sum_indicate").text(sum);
     let average = sum / subject_points.length
@@ -84,13 +83,14 @@ $(function(){
   });
   // 「最終ジャッジ」(class="btn-declaration")ボタンを押したら「function judgement()」が出力される処理です。
   $('#btn-declaration').click(function(){
+    $('#alert-indicate').remove();
     function judgement(){
       // 変数「achievement」に「get_achievement()の戻り値」を代入します。
       let achievement = get_achievement();
       // 変数「pass_or_failure」に「get_pass_or_failure()の戻り値」を代入します。
       let pass_or_failure = get_pass_or_failure();
-      // 「最終ジャッジ」(id="alert-indicate)ボタンを押したら「あなたの成績は${achievement}で${pass_or_failure}です」が出力される処理です。
       $('#declaration').append(`<label id="alert-indicate" class="alert alert-info">あなたの成績は${achievement}で${pass_or_failure}です</label>`);
     };
+    judgement();
   });
 });
